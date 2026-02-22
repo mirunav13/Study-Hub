@@ -58,11 +58,33 @@ public class PomodoroController {
     @FXML
     public void addTask() {
         String taskText = taskInput.getText().trim();
+
         if (!taskText.isEmpty()) {
-            createTaskCard(taskText, todoColumn, "TODO");
-            DatabaseManager.updateTaskStatus(taskText, "TODO");
-            taskInput.clear();
+            boolean alreadyExists = checkIfTaskExists(taskText);
+
+            if (!alreadyExists) {
+                createTaskCard(taskText, todoColumn, "TODO");
+                DatabaseManager.updateTaskStatus(taskText, "TODO");
+                taskInput.clear();
+                taskInput.setPromptText("Enter a new task...");
+            } else {
+                taskInput.clear();
+                taskInput.setPromptText("Task already exists!");
+            }
         }
+    }
+
+    private boolean checkIfTaskExists(String taskName) {
+        for (Node node : todoColumn.getChildren()) {
+            if (((Button) node).getText().equals(taskName)) return true;
+        }
+        for (Node node : inProgressColumn.getChildren()) {
+            if (((Button) node).getText().equals(taskName)) return true;
+        }
+        for (Node node : doneColumn.getChildren()) {
+            if (((Button) node).getText().equals(taskName)) return true;
+        }
+        return false;
     }
 
     private void createTaskCard(String text, VBox column, String status) {
