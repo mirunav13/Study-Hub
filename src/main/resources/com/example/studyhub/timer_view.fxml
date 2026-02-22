@@ -4,56 +4,80 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studyhub.PomodoroController">
-    <children>
-        <VBox alignment="TOP_RIGHT" spacing="5.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studyhub.PomodoroController">
+
+    <top>
+        <HBox alignment="CENTER" spacing="50.0" style="-fx-background-color: #f5f5f5; -fx-padding: 20px; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
             <children>
-                <Label fx:id="levelLabel" text="Level: 1" textFill="#2196f3">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-                <Label fx:id="xpLabel" text="XP: 0 / 100" textFill="#757575">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Label>
+                <VBox alignment="CENTER" spacing="10.0">
+                    <Label fx:id="timerLabel" text="25:00">
+                        <font><Font name="System Bold" size="48.0" /></font>
+                    </Label>
+                    <HBox alignment="CENTER" spacing="10.0">
+                        <Button mnemonicParsing="false" onAction="#startTimer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Start" />
+                        <Button mnemonicParsing="false" onAction="#pauseTimer" style="-fx-background-color: #FFC107;" text="Pause" />
+                        <Button mnemonicParsing="false" onAction="#resetTimer" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Reset" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="5.0">
+                        <TextField fx:id="inputMinute" prefWidth="80.0" promptText="Minutes" />
+                        <Button mnemonicParsing="false" onAction="#setTime" text="Set" />
+                    </HBox>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5.0">
+                    <Label fx:id="levelLabel" text="Level: 1" textFill="#2196f3">
+                        <font><Font name="System Bold" size="24.0" /></font>
+                    </Label>
+                    <ProgressBar fx:id="levelProgressBar" prefHeight="20.0" prefWidth="200.0" progress="0.0" />
+                    <Label fx:id="xpLabel" text="XP: 0 / 100" textFill="#757575">
+                        <font><Font name="System Bold" size="14.0" /></font>
+                    </Label>
+                </VBox>
             </children>
-        </VBox>
-        <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        </HBox>
+    </top>
+
+    <center>
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20px;">
             <children>
-                <ProgressBar fx:id="levelProgressBar" prefHeight="15.0" prefWidth="300.0" progress="0.0" />
-                <HBox alignment="CENTER" spacing="10.0">
-                    <children>
-                        <TextField fx:id="inputMinute" prefWidth="130.0" promptText="Minutes (e.g. 25)" />
-                        <Button mnemonicParsing="false" onAction="#setTime" text="Set Time" />
-                    </children>
-                </HBox>
-                <Label fx:id="timerLabel" text="25:00">
-                    <font>
-                        <Font name="System Bold" size="72.0" />
-                    </font>
-                </Label>
-                <HBox alignment="CENTER" spacing="15.0">
-                    <children>
-                        <Button mnemonicParsing="false" onAction="#startTimer" prefWidth="80.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Start">
-                            <font><Font name="System Bold" size="14.0" /></font>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#pauseTimer" prefWidth="80.0" style="-fx-background-color: #FFC107;" text="Pause">
-                            <font><Font name="System Bold" size="14.0" /></font>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#resetTimer" prefWidth="80.0" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Reset">
-                            <font><Font name="System Bold" size="14.0" /></font>
-                        </Button>
-                    </children>
-                </HBox>
+                <VBox prefWidth="250.0" style="-fx-background-color: #eceff1; -fx-background-radius: 5; -fx-padding: 10;">
+                    <Label text="TO DO" textFill="#546e7a"><font><Font name="System Bold" size="16.0" /></font></Label>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="todoColumn" spacing="10.0" style="-fx-padding: 10 0 0 0;" />
+                    </ScrollPane>
+                </VBox>
+
+                <VBox prefWidth="250.0" style="-fx-background-color: #fff3e0; -fx-background-radius: 5; -fx-padding: 10;">
+                    <Label text="IN PROGRESS" textFill="#ef6c00"><font><Font name="System Bold" size="16.0" /></font></Label>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="inProgressColumn" spacing="10.0" style="-fx-padding: 10 0 0 0;" />
+                    </ScrollPane>
+                </VBox>
+
+                <VBox prefWidth="250.0" style="-fx-background-color: #e8f5e9; -fx-background-radius: 5; -fx-padding: 10;">
+                    <Label text="DONE" textFill="#2e7d32"><font><Font name="System Bold" size="16.0" /></font></Label>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="doneColumn" spacing="10.0" style="-fx-padding: 10 0 0 0;" />
+                    </ScrollPane>
+                </VBox>
             </children>
-        </VBox>
-    </children>
-</AnchorPane>
+        </HBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 20px; -fx-background-color: #f5f5f5;">
+            <TextField fx:id="taskInput" prefWidth="400.0" promptText="Enter a new task..." />
+            <Button mnemonicParsing="false" onAction="#addTask" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Add Task">
+                <font><Font name="System Bold" size="14.0" /></font>
+            </Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>
