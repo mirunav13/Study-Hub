@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.media.AudioClip;
+import java.net.URL;
 
 public class PomodoroController {
 
@@ -161,6 +163,7 @@ public class PomodoroController {
                 timeline.stop();
                 int taskXp = completeInProgressTasks();
                 grantReward(taskXp);
+                playNotificationSound();
             }
         }));
 
@@ -193,6 +196,21 @@ public class PomodoroController {
         int totalSessionXp = timeXp + taskXp;
 
         System.out.println("Session complete! You received a total of " + totalSessionXp + " XP (" + timeXp + " for time, " + taskXp + " for tasks).");
+    }
+
+    private void playNotificationSound() {
+        try {
+            URL resource = getClass().getResource("notification.mp3");
+
+            if (resource != null) {
+                AudioClip clip = new AudioClip(resource.toString());
+                clip.play();
+            } else {
+                System.out.println("Audio file not found! Make sure it is in the correct folder.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error playing sound: " + e.getMessage());
+        }
     }
 
     private void addXp(int amount) {
