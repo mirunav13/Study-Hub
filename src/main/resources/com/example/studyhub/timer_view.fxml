@@ -32,10 +32,13 @@
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5.0">
-                    <Label fx:id="levelLabel" text="Level: 1" textFill="#2196f3">
-                        <font><Font name="System Bold" size="24.0" /></font>
-                    </Label>
-                    <ProgressBar fx:id="levelProgressBar" prefHeight="20.0" prefWidth="200.0" progress="0.0" />
+                    <HBox alignment="CENTER" spacing="20.0">
+                        <Label fx:id="levelLabel" text="Level: 1" textFill="#2196f3">
+                            <font><Font name="System Bold" size="24.0" /></font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#showAchievementsDialog" style="-fx-background-color: #9C27B0; -fx-text-fill: white; -fx-font-weight: bold;" text="🏆 Badges" />
+                    </HBox>
+                    <ProgressBar fx:id="levelProgressBar" prefHeight="20.0" prefWidth="250.0" progress="0.0" />
                     <Label fx:id="xpLabel" text="XP: 0 / 100" textFill="#757575">
                         <font><Font name="System Bold" size="14.0" /></font>
                     </Label>
